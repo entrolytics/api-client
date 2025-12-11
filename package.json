@@ -1,7 +1,7 @@
 {
   "name": "@entrolytics/api-client",
   "version": "2.0.0",
-  "description": "TypeScript API client for Entrolytics analytics platform",
+  "description": "TypeScript API client for Entrolytics - First-party growth analytics for the edge",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
-    "@types/node": "^24.10.2",
+    "@types/node": "^25.0.0",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
   },
