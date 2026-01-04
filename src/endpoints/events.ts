@@ -73,14 +73,25 @@ export function createEventsEndpoints(client: ApiClient) {
       return client.get(`/websites/${websiteId}/session-data/properties`, params);
     },
 
-    /**
-     * Get session data values for a property.
-     */
     getSessionDataValues(
       websiteId: string,
       params: DateRangeParams & { propertyName: string },
     ): Promise<ApiResponse<{ propertyValue: string; total: number }[]>> {
       return client.get(`/websites/${websiteId}/session-data/values`, params);
+    },
+
+    /**
+     * Send a test event to verify setup.
+     */
+    sendTestEvent(websiteId: string): Promise<ApiResponse<void>> {
+      return client.post<void>('/send', {
+        type: 'event',
+        payload: {
+          website: websiteId,
+          name: 'cli_test_event',
+          data: { source: 'entro-cli', timestamp: Date.now() },
+        },
+      });
     },
   };
 }

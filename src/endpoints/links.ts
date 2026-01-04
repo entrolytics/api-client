@@ -44,5 +44,12 @@ export function createLinksEndpoints(client: ApiClient) {
     deleteLink(linkId: string): Promise<ApiResponse<void>> {
       return client.delete<void>(`/links/${linkId}`);
     },
+
+    /**
+     * Get link statistics.
+     */
+    getLinkStats(linkId: string): Promise<ApiResponse<import('../types').Stats>> {
+      return client.get<import('../types').Stats>(`/links/${linkId}/stats`);
+    },
   };
 }

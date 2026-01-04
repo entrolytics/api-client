@@ -141,6 +141,16 @@ export interface WebsiteStats {
   totalTime: { value: number; change: number };
 }
 
+/**
+ * Link statistics - alias to WebsiteStats as they share the same structure
+ */
+export type LinkStats = WebsiteStats;
+
+/**
+ * @deprecated Use WebsiteStats or LinkStats instead
+ */
+export type Stats = WebsiteStats;
+
 export interface PageviewData {
   x: string;
   y: number;

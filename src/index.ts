@@ -20,6 +20,48 @@ import {
 } from './endpoints';
 
 export type { ClientConfig } from './client';
+// Re-export only constants and utilities from shared (not type definitions to avoid conflicts)
+export {
+  PLANS,
+  PLAN_FEATURES,
+  USAGE_THRESHOLDS,
+  BILLING_ERRORS,
+  API_ENDPOINTS,
+  DEFAULT_API_HOST,
+  ENV_VAR_NAMES,
+  CLI_CONFIG,
+  EVENT_TYPES,
+  VITAL_TYPES,
+  VITAL_RATINGS,
+  VITAL_THRESHOLDS,
+  NAVIGATION_TYPES,
+  FORM_EVENT_TYPES,
+  FORM_FIELD_TYPES,
+  DEPLOYMENT_SOURCES,
+  DEPLOYMENT_ENV_VARS,
+  HTTP_STATUS,
+  API_ROUTES,
+  ONBOARDING_STEPS,
+  CLI_TOKEN_STATUS,
+  USER_ROLES,
+  FRAMEWORK_PACKAGES,
+  FRAMEWORK_PATTERNS,
+  RATE_LIMITS,
+  ERROR_MESSAGES,
+  SUCCESS_MESSAGES,
+  getEnvVarNames,
+  getFrameworkPackage,
+  isValidFramework,
+  getApiRoute,
+  getPlan,
+  isPlanFeatureEnabled,
+  getPlanLimit,
+  isUsageWarning,
+  isUsageCritical,
+  getVitalRating,
+  detectDeploymentContext,
+} from '@entrolytics/shared';
+// Export all local types (API-specific type definitions)
 export * from './types';
 
 /**
@@ -117,6 +159,7 @@ export interface EntrolyticsClient {
   getEventData: ReturnType<typeof createEventsEndpoints>['getEventData'];
   getSessionDataProperties: ReturnType<typeof createEventsEndpoints>['getSessionDataProperties'];
   getSessionDataValues: ReturnType<typeof createEventsEndpoints>['getSessionDataValues'];
+  sendTestEvent: ReturnType<typeof createEventsEndpoints>['sendTestEvent'];
 
   // Report endpoints
   getReports: ReturnType<typeof createReportsEndpoints>['getReports'];
@@ -147,6 +190,7 @@ export interface EntrolyticsClient {
   getLink: ReturnType<typeof createLinksEndpoints>['getLink'];
   updateLink: ReturnType<typeof createLinksEndpoints>['updateLink'];
   deleteLink: ReturnType<typeof createLinksEndpoints>['deleteLink'];
+  getLinkStats: ReturnType<typeof createLinksEndpoints>['getLinkStats'];
 
   // Pixel endpoints
   getPixels: ReturnType<typeof createPixelsEndpoints>['getPixels'];

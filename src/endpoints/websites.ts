@@ -224,7 +224,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Get Web Vitals statistics for a website.
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     getWebsiteVitals(
       websiteId: string,
@@ -235,7 +235,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Get individual Web Vital events.
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     getWebsiteVitalEvents(
       websiteId: string,
@@ -246,7 +246,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Track a Web Vital metric (send to collection endpoint).
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     trackVital(websiteId: string, data: TrackVitalData): Promise<ApiResponse<{ success: boolean }>> {
       return client.post<{ success: boolean }>('/collect/vitals', {
@@ -257,7 +257,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Track multiple Web Vitals metrics in batch.
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     trackVitalsBatch(
       websiteId: string,
@@ -275,7 +275,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Get form analytics for a website.
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     getWebsiteForms(
       websiteId: string,
@@ -286,7 +286,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Get field-level analytics for a specific form.
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     getFormFields(
       websiteId: string,
@@ -298,7 +298,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Get individual form events.
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     getFormEvents(
       websiteId: string,
@@ -309,7 +309,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Track a form event (send to collection endpoint).
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     trackFormEvent(
       websiteId: string,
@@ -323,7 +323,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Track multiple form events in batch.
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     trackFormEventsBatch(
       websiteId: string,
@@ -341,7 +341,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Get deployments for a website.
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     getWebsiteDeployments(
       websiteId: string,
@@ -352,7 +352,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Get a specific deployment.
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     getDeployment(
       websiteId: string,
@@ -363,7 +363,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Compare two deployments.
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     compareDeployments(
       websiteId: string,
@@ -377,7 +377,7 @@ export function createWebsitesEndpoints(client: ApiClient) {
 
     /**
      * Set/register a deployment context.
-     * Note: Only available in entrolytics-ng.
+     * Note: Only available in entrolytics.
      */
     setDeployment(
       websiteId: string,
