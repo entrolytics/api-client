@@ -1,11 +1,11 @@
-import type { ApiClient } from '../client';
+import type { ApiClient } from "../client";
 import type {
   ApiResponse,
   CreateReportData,
   DateRangeParams,
   Report,
   UpdateReportData,
-} from '../types';
+} from "../types";
 
 // Report-specific result types
 interface FunnelResult {
@@ -87,7 +87,7 @@ export function createReportsEndpoints(client: ApiClient) {
      * Create a new report.
      */
     createReport(data: CreateReportData): Promise<ApiResponse<Report>> {
-      return client.post<Report>('/reports', data);
+      return client.post<Report>("/reports", data);
     },
 
     /**
@@ -117,12 +117,12 @@ export function createReportsEndpoints(client: ApiClient) {
     runFunnelReport(
       params: DateRangeParams & {
         websiteId: string;
-        steps: { type: 'path' | 'event'; value: string }[];
+        steps: { type: "path" | "event"; value: string }[];
         window?: number;
       },
     ): Promise<ApiResponse<FunnelResult[]>> {
       const { websiteId, steps, window = 30, startAt, endAt, ...rest } = params;
-      return client.post<FunnelResult[]>('/reports/funnel', {
+      return client.post<FunnelResult[]>("/reports/funnel", {
         websiteId,
         parameters: {
           startDate: startAt,
@@ -144,7 +144,7 @@ export function createReportsEndpoints(client: ApiClient) {
       },
     ): Promise<ApiResponse<RetentionResult[]>> {
       const { websiteId, startAt, endAt, timezone, ...rest } = params;
-      return client.post<RetentionResult[]>('/reports/retention', {
+      return client.post<RetentionResult[]>("/reports/retention", {
         websiteId,
         parameters: {
           startDate: startAt,
@@ -167,7 +167,7 @@ export function createReportsEndpoints(client: ApiClient) {
       },
     ): Promise<ApiResponse<JourneyResult>> {
       const { websiteId, startAt, endAt, steps = 5, startStep, endStep, ...rest } = params;
-      return client.post<JourneyResult>('/reports/journey', {
+      return client.post<JourneyResult>("/reports/journey", {
         websiteId,
         parameters: {
           startDate: startAt,
@@ -191,7 +191,7 @@ export function createReportsEndpoints(client: ApiClient) {
       },
     ): Promise<ApiResponse<GoalResult[]>> {
       const { websiteId, startAt, endAt, type, value, ...rest } = params;
-      return client.post<GoalResult[]>('/reports/goal', {
+      return client.post<GoalResult[]>("/reports/goal", {
         websiteId,
         parameters: {
           startDate: startAt,
@@ -209,14 +209,14 @@ export function createReportsEndpoints(client: ApiClient) {
     runAttributionReport(
       params: DateRangeParams & {
         websiteId: string;
-        model: 'first-click' | 'last-click';
-        type: 'path' | 'event';
+        model: "first-click" | "last-click";
+        type: "path" | "event";
         step: string;
         currency?: string;
       },
     ): Promise<ApiResponse<AttributionResult[]>> {
       const { websiteId, startAt, endAt, model, type, step, currency, ...rest } = params;
-      return client.post<AttributionResult[]>('/reports/attribution', {
+      return client.post<AttributionResult[]>("/reports/attribution", {
         websiteId,
         parameters: {
           startDate: startAt,
@@ -239,8 +239,8 @@ export function createReportsEndpoints(client: ApiClient) {
         currency?: string;
       },
     ): Promise<ApiResponse<RevenueResult[]>> {
-      const { websiteId, startAt, endAt, currency = 'USD', ...rest } = params;
-      return client.post<RevenueResult[]>('/reports/revenue', {
+      const { websiteId, startAt, endAt, currency = "USD", ...rest } = params;
+      return client.post<RevenueResult[]>("/reports/revenue", {
         websiteId,
         parameters: {
           startDate: startAt,
@@ -260,7 +260,7 @@ export function createReportsEndpoints(client: ApiClient) {
       },
     ): Promise<ApiResponse<UTMResult[]>> {
       const { websiteId, startAt, endAt, ...rest } = params;
-      return client.post<UTMResult[]>('/reports/utm', {
+      return client.post<UTMResult[]>("/reports/utm", {
         websiteId,
         parameters: {
           startDate: startAt,
@@ -281,7 +281,7 @@ export function createReportsEndpoints(client: ApiClient) {
       },
     ): Promise<ApiResponse<BreakdownResult[]>> {
       const { websiteId, startAt, endAt, property, ...rest } = params;
-      return client.post<BreakdownResult[]>('/reports/breakdown', {
+      return client.post<BreakdownResult[]>("/reports/breakdown", {
         websiteId,
         parameters: {
           startDate: startAt,

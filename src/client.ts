@@ -1,4 +1,4 @@
-import type { ApiResponse } from './types';
+import type { ApiResponse } from "./types";
 
 export interface ClientConfig {
   /** API endpoint URL (e.g., 'https://analytics.example.com/api') */
@@ -7,10 +7,6 @@ export interface ClientConfig {
   bearerToken?: string;
   /** API key for programmatic access */
   apiKey?: string;
-  /** User ID for self-hosted authentication (legacy) */
-  userId?: string;
-  /** Secret for self-hosted authentication (legacy) */
-  secret?: string;
   /** Custom fetch implementation */
   fetch?: typeof fetch;
   /** Number of retry attempts for failed requests (default: 3) */
@@ -19,7 +15,7 @@ export interface ClientConfig {
   retryDelay?: number;
 }
 
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
 interface RequestOptions {
   method?: HttpMethod;
@@ -35,8 +31,6 @@ export class ApiClient {
   private endpoint: string;
   private bearerToken?: string;
   private apiKey?: string;
-  private userId?: string;
-  private secret?: string;
   private fetchFn: typeof fetch;
   private retries: number;
   private retryDelay: number;
@@ -44,24 +38,27 @@ export class ApiClient {
   constructor(config: ClientConfig = {}) {
     // Helper to safely access process.env (edge runtime compatible)
     const getEnv = (key: string): string | undefined => {
-      if (typeof process !== 'undefined' && process.env) {
+      if (typeof process !== "undefined" && process.env) {
         return process.env[key];
       }
       return undefined;
     };
 
-    this.endpoint = config.endpoint || getEnv('ENTROLYTICS_API_ENDPOINT') || '';
-    this.bearerToken = config.bearerToken || getEnv('ENTROLYTICS_BEARER_TOKEN');
-    this.apiKey = config.apiKey || getEnv('ENTROLYTICS_API_KEY');
-    this.userId = config.userId || getEnv('ENTROLYTICS_USER_ID');
-    this.secret = config.secret || getEnv('ENTROLYTICS_SECRET');
+    const rawEndpoint = config.endpoint || getEnv("ENTROLYTICS_API_ENDPOINT") || "";
+    this.endpoint = rawEndpoint
+      ? rawEndpoint.endsWith("/")
+        ? rawEndpoint
+        : `${rawEndpoint}/`
+      : "";
+    this.bearerToken = config.bearerToken || getEnv("ENTROLYTICS_BEARER_TOKEN");
+    this.apiKey = config.apiKey || getEnv("ENTROLYTICS_API_KEY");
     this.fetchFn = config.fetch || globalThis.fetch;
     this.retries = config.retries ?? 3;
     this.retryDelay = config.retryDelay ?? 1000;
 
     if (!this.endpoint) {
       throw new Error(
-        'Entrolytics API endpoint is required. Set ENTROLYTICS_API_ENDPOINT or pass endpoint in config.',
+        "Entrolytics API endpoint is required. Set ENTROLYTICS_API_ENDPOINT or pass endpoint in config.",
       );
     }
   }
@@ -75,7 +72,7 @@ export class ApiClient {
 
   /**
    * Generate authentication headers.
-   * Priority: Bearer token > API key > Legacy share token
+   * Priority: Bearer token > API key
    */
   private getAuthHeaders(): Record<string, string> {
     const headers: Record<string, string> = {};
@@ -85,46 +82,17 @@ export class ApiClient {
       headers.Authorization = `Bearer ${this.bearerToken}`;
     } else if (this.apiKey) {
       // API key authentication
-      headers['x-entrolytics-api-key'] = this.apiKey;
-    } else if (this.userId && this.secret) {
-      // Legacy self-hosted authentication
-      headers['x-entrolytics-share-token'] = this.createShareToken();
+      headers["x-api-key"] = this.apiKey;
     }
 
     return headers;
   }
 
   /**
-   * Create a share token for self-hosted authentication (legacy).
-   * @deprecated Use bearerToken or apiKey instead
-   */
-  private createShareToken(): string {
-    if (!this.userId || !this.secret) {
-      throw new Error('userId and secret are required for self-hosted authentication');
-    }
-
-    // Simple base64 token for backwards compatibility
-    // New integrations should use bearerToken or apiKey
-    const payload = {
-      userId: this.userId,
-      timestamp: Date.now(),
-    };
-
-    // Edge-compatible base64 encoding (use btoa instead of Buffer)
-    if (typeof Buffer !== 'undefined') {
-      // Node.js environment
-      return Buffer.from(JSON.stringify(payload)).toString('base64');
-    } else {
-      // Edge/Browser environment
-      return btoa(JSON.stringify(payload));
-    }
-  }
-
-  /**
    * Sleep helper for retry delays.
    */
   private sleep(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   /**
@@ -141,7 +109,8 @@ export class ApiClient {
     path: string,
     params?: Record<string, string | number | boolean | undefined>,
   ): string {
-    const url = new URL(path, this.endpoint);
+    const normalizedPath = path.startsWith("/") ? path.slice(1) : path;
+    const url = new URL(normalizedPath, this.endpoint);
 
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
@@ -158,7 +127,7 @@ export class ApiClient {
    * Make an authenticated API request with automatic retries.
    */
   async request<T>(path: string, options: RequestOptions = {}): Promise<ApiResponse<T>> {
-    const { method = 'GET', body, params, headers = {} } = options;
+    const { method = "GET", body, params, headers = {} } = options;
 
     const url = this.buildUrl(path, params);
     let lastError: ApiResponse<T> | null = null;
@@ -168,7 +137,7 @@ export class ApiClient {
         const fetchOptions: RequestInit = {
           method,
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             ...this.getAuthHeaders(),
             ...headers,
           },
@@ -184,9 +153,9 @@ export class ApiClient {
 
         if (!response.ok) {
           const errorMessage =
-            typeof data.error === 'string'
+            typeof data.error === "string"
               ? data.error
-              : typeof data.message === 'string'
+              : typeof data.message === "string"
                 ? data.message
                 : `HTTP ${response.status}`;
 
@@ -215,7 +184,7 @@ export class ApiClient {
         lastError = {
           ok: false,
           status: 0,
-          error: error instanceof Error ? error.message : 'Network error',
+          error: error instanceof Error ? error.message : "Network error",
         };
 
         // Retry on network errors
@@ -230,7 +199,7 @@ export class ApiClient {
       lastError ?? {
         ok: false,
         status: 0,
-        error: 'Request failed after retries',
+        error: "Request failed after retries",
       }
     );
   }
@@ -242,34 +211,34 @@ export class ApiClient {
     path: string,
     params?: Record<string, string | number | boolean | undefined>,
   ): Promise<ApiResponse<T>> {
-    return this.request<T>(path, { method: 'GET', params });
+    return this.request<T>(path, { method: "GET", params });
   }
 
   /**
    * POST request helper.
    */
   post<T>(path: string, body?: unknown): Promise<ApiResponse<T>> {
-    return this.request<T>(path, { method: 'POST', body });
+    return this.request<T>(path, { method: "POST", body });
   }
 
   /**
    * PUT request helper.
    */
   put<T>(path: string, body?: unknown): Promise<ApiResponse<T>> {
-    return this.request<T>(path, { method: 'PUT', body });
+    return this.request<T>(path, { method: "PUT", body });
   }
 
   /**
    * DELETE request helper.
    */
   delete<T>(path: string): Promise<ApiResponse<T>> {
-    return this.request<T>(path, { method: 'DELETE' });
+    return this.request<T>(path, { method: "DELETE" });
   }
 
   /**
    * PATCH request helper.
    */
   patch<T>(path: string, body?: unknown): Promise<ApiResponse<T>> {
-    return this.request<T>(path, { method: 'PATCH', body });
+    return this.request<T>(path, { method: "PATCH", body });
   }
 }

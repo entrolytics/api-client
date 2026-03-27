@@ -1,6 +1,6 @@
-import type { CliAccessTokenMetadata } from '@entrolytics/shared';
-import type { ApiClient } from '../client';
-import type { ApiResponse } from '../types';
+import type { CliAccessTokenMetadata } from "@entrolytics/shared";
+import type { ApiClient } from "../client";
+import type { ApiResponse } from "../types";
 
 export function createAuthEndpoints(client: ApiClient) {
   return {
@@ -8,7 +8,7 @@ export function createAuthEndpoints(client: ApiClient) {
      * List all active CLI access tokens for the current user.
      */
     listCliTokens(): Promise<ApiResponse<CliAccessTokenMetadata[]>> {
-      return client.get<CliAccessTokenMetadata[]>('/auth/cli/tokens');
+      return client.get<CliAccessTokenMetadata[]>("/auth/cli/tokens");
     },
 
     /**
@@ -17,8 +17,8 @@ export function createAuthEndpoints(client: ApiClient) {
      * @param jti - The JWT ID of the token to revoke
      */
     revokeCliToken(jti: string): Promise<ApiResponse<{ message: string }>> {
-      return client['request']<{ message: string }>('/auth/cli/tokens', {
-        method: 'DELETE',
+      return client["request"]<{ message: string }>("/auth/cli/tokens", {
+        method: "DELETE",
         body: { jti },
       });
     },
@@ -27,8 +27,8 @@ export function createAuthEndpoints(client: ApiClient) {
      * Revoke all CLI access tokens for the current user.
      */
     revokeAllCliTokens(): Promise<ApiResponse<{ message: string; count: number }>> {
-      return client['request']<{ message: string; count: number }>('/auth/cli/tokens', {
-        method: 'DELETE',
+      return client["request"]<{ message: string; count: number }>("/auth/cli/tokens", {
+        method: "DELETE",
         body: { revokeAll: true },
       });
     },

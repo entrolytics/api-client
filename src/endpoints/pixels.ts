@@ -1,5 +1,5 @@
-import type { ApiClient } from '../client';
-import type { ApiResponse, CreatePixelData, Pixel, UpdatePixelData } from '../types';
+import type { ApiClient } from "../client";
+import type { ApiResponse, CreatePixelData, Pixel, UpdatePixelData } from "../types";
 
 export function createPixelsEndpoints(client: ApiClient) {
   return {
@@ -7,7 +7,7 @@ export function createPixelsEndpoints(client: ApiClient) {
      * Get all pixels.
      */
     getPixels(): Promise<ApiResponse<Pixel[]>> {
-      return client.get<Pixel[]>('/pixels');
+      return client.get<Pixel[]>("/pixels");
     },
 
     /**

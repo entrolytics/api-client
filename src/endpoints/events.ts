@@ -1,5 +1,20 @@
-import type { ApiClient } from '../client';
-import type { ApiResponse, DateRangeParams, EventData, EventDataField, EventStats } from '../types';
+import type { ApiClient } from "../client";
+import type { ApiResponse, DateRangeParams, EventData, EventDataField, EventStats } from "../types";
+
+function generateUuid(): string {
+  if (
+    typeof globalThis.crypto !== "undefined" &&
+    typeof globalThis.crypto.randomUUID === "function"
+  ) {
+    return globalThis.crypto.randomUUID();
+  }
+
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = Math.floor(Math.random() * 16);
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
 
 export function createEventsEndpoints(client: ApiClient) {
   return {
@@ -84,12 +99,16 @@ export function createEventsEndpoints(client: ApiClient) {
      * Send a test event to verify setup.
      */
     sendTestEvent(websiteId: string): Promise<ApiResponse<void>> {
-      return client.post<void>('/send', {
-        type: 'event',
-        payload: {
-          website: websiteId,
-          name: 'cli_test_event',
-          data: { source: 'entro-cli', timestamp: Date.now() },
+      return client.post<void>("/collect", {
+        websiteId,
+        sessionId: generateUuid(),
+        visitorId: generateUuid(),
+        url: "https://entrolytics.click/test-event",
+        eventType: "custom_event",
+        eventName: "cli_test_event",
+        properties: {
+          source: "entro-cli",
+          timestamp: Date.now(),
         },
       });
     },

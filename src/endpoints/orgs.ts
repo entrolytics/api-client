@@ -1,4 +1,4 @@
-import type { ApiClient } from '../client';
+import type { ApiClient } from "../client";
 import type {
   ApiResponse,
   CreateOrgData,
@@ -7,7 +7,7 @@ import type {
   OrgUser,
   UpdateOrgData,
   Website,
-} from '../types';
+} from "../types";
 
 export function createOrgsEndpoints(client: ApiClient) {
   return {
@@ -15,21 +15,21 @@ export function createOrgsEndpoints(client: ApiClient) {
      * Get all organizations for the current user.
      */
     getOrgs(): Promise<ApiResponse<Organization[]>> {
-      return client.get<Organization[]>('/orgs');
+      return client.get<Organization[]>("/orgs");
     },
 
     /**
      * Create a new organization.
      */
     createOrg(data: CreateOrgData): Promise<ApiResponse<Organization>> {
-      return client.post<Organization>('/orgs', data);
+      return client.post<Organization>("/orgs", data);
     },
 
     /**
      * Join an organization using access code.
      */
     joinOrg(data: JoinOrgData): Promise<ApiResponse<Organization>> {
-      return client.post<Organization>('/orgs/join', data);
+      return client.post<Organization>("/orgs/join", data);
     },
 
     /**
@@ -43,7 +43,7 @@ export function createOrgsEndpoints(client: ApiClient) {
      * Update an organization.
      */
     updateOrg(orgId: string, data: UpdateOrgData): Promise<ApiResponse<Organization>> {
-      return client.post<Organization>(`/orgs/${orgId}`, data);
+      return client.patch<Organization>(`/orgs/${orgId}`, data);
     },
 
     /**
@@ -65,7 +65,7 @@ export function createOrgsEndpoints(client: ApiClient) {
      */
     addOrgUser(
       orgId: string,
-      data: { userId: string; role: 'admin' | 'member' | 'view-only' },
+      data: { userId: string; role: "admin" | "member" | "view-only" },
     ): Promise<ApiResponse<OrgUser>> {
       return client.post<OrgUser>(`/orgs/${orgId}/users`, data);
     },
@@ -76,7 +76,7 @@ export function createOrgsEndpoints(client: ApiClient) {
     updateOrgUser(
       orgId: string,
       userId: string,
-      data: { role: 'admin' | 'member' | 'view-only' },
+      data: { role: "admin" | "member" | "view-only" },
     ): Promise<ApiResponse<OrgUser>> {
       return client.post<OrgUser>(`/orgs/${orgId}/users/${userId}`, data);
     },

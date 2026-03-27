@@ -1,3 +1,12 @@
+import type {
+  DeploymentSource,
+  FormEventType,
+  FormFieldType,
+  NavigationType,
+  VitalRating,
+  VitalType,
+} from "@entrolytics/shared";
+
 // ============================================================================
 // Common Types
 // ============================================================================
@@ -25,8 +34,8 @@ export interface DateRangeParams {
 // User Types
 // ============================================================================
 
-export type PlatformRole = 'admin' | 'user' | 'view-only';
-export type OrganizationRole = 'admin' | 'manager' | 'member' | 'view-only';
+export type PlatformRole = "admin" | "user" | "view-only";
+export type OrganizationRole = "admin" | "manager" | "member" | "view-only";
 
 export interface User {
   id: string;
@@ -167,17 +176,17 @@ export interface MetricData {
 }
 
 export type MetricType =
-  | 'url'
-  | 'title'
-  | 'referrer'
-  | 'browser'
-  | 'os'
-  | 'device'
-  | 'country'
-  | 'region'
-  | 'city'
-  | 'language'
-  | 'event';
+  | "url"
+  | "title"
+  | "referrer"
+  | "browser"
+  | "os"
+  | "device"
+  | "country"
+  | "region"
+  | "city"
+  | "language"
+  | "event";
 
 export interface WebsiteMetricsParams extends DateRangeParams {
   type: MetricType;
@@ -447,7 +456,7 @@ export interface UpdateBoardWidgetData {
 // Billing Types
 // ============================================================================
 
-export type PlanId = 'starter' | 'pro' | 'business' | 'enterprise';
+export type PlanId = "starter" | "pro" | "business" | "enterprise";
 
 export interface AccountUsage {
   /** Current billing period start date (ISO string) */
@@ -496,7 +505,7 @@ export interface Subscription {
   /** Current plan */
   plan: PlanId;
   /** Subscription status */
-  status: 'active' | 'past_due' | 'canceled' | 'trialing' | 'incomplete';
+  status: "active" | "past_due" | "canceled" | "trialing" | "incomplete";
   /** Current billing period start */
   currentPeriodStart: string;
   /** Current billing period end */
@@ -511,7 +520,7 @@ export interface CheckoutOptions {
   /** Plan to checkout */
   plan: PlanId;
   /** Billing interval */
-  interval?: 'month' | 'year';
+  interval?: "month" | "year";
   /** Success redirect URL */
   successUrl?: string;
   /** Cancel redirect URL */
@@ -535,7 +544,7 @@ export interface PortalResponse {
 /**
  * Website ingest mode configuration
  */
-export type IngestMode = 'auto' | 'node' | 'edge';
+export type IngestMode = "auto" | "node" | "edge";
 
 export interface WebsiteModeConfig {
   ingestMode: IngestMode;
@@ -545,7 +554,7 @@ export interface WebsiteModeConfig {
  * Routing health status
  */
 export interface RoutingHealth {
-  status: 'ok' | 'degraded' | 'error';
+  status: "ok" | "degraded" | "error";
   edge: {
     healthy: boolean;
     latency: number;
@@ -588,9 +597,8 @@ export interface RoutingStats {
 // Phase 2: Web Vitals Types
 // ============================================================================
 
-export type VitalMetric = 'LCP' | 'INP' | 'CLS' | 'TTFB' | 'FCP';
-export type VitalRating = 'good' | 'needs-improvement' | 'poor';
-export type NavigationType = 'navigate' | 'reload' | 'back-forward' | 'back-forward-cache' | 'prerender' | 'restore';
+export type VitalMetric = VitalType;
+export type { DeploymentSource, FormEventType, FormFieldType, NavigationType, VitalRating };
 
 export interface WebVital {
   id: string;
@@ -608,14 +616,15 @@ export interface WebVital {
 }
 
 export interface WebVitalsStats {
-  metric: VitalMetric;
+  metricName: VitalMetric;
+  goodCount: number;
+  needsImprovementCount: number;
+  poorCount: number;
+  p75Value: number;
+  p95Value: number;
+  avgValue: number;
   count: number;
-  p50: number;
-  p75: number;
-  p95: number;
-  good: number;
-  needsImprovement: number;
-  poor: number;
+  goodPercentage: number;
 }
 
 export interface WebVitalsParams extends DateRangeParams {
@@ -626,6 +635,10 @@ export interface WebVitalsParams extends DateRangeParams {
 }
 
 export interface TrackVitalData {
+  visitorId: string;
+  sessionId: string;
+  url: string;
+  path: string;
   metric: VitalMetric;
   value: number;
   rating: VitalRating;
@@ -633,16 +646,13 @@ export interface TrackVitalData {
   id?: string;
   navigationType?: NavigationType;
   attribution?: Record<string, unknown>;
-  url?: string;
-  path?: string;
-  sessionId?: string;
+  deviceType?: string;
+  browser?: string;
 }
 
 // ============================================================================
 // Phase 2: Form Analytics Types
 // ============================================================================
-
-export type FormEventType = 'start' | 'field_focus' | 'field_blur' | 'field_error' | 'submit' | 'abandon';
 
 export interface FormEvent {
   id: string;
@@ -664,22 +674,20 @@ export interface FormEvent {
 
 export interface FormStats {
   formId: string;
-  formName?: string;
+  formName: string | null;
   starts: number;
-  submissions: number;
-  abandonments: number;
+  submits: number;
+  abandons: number;
   conversionRate: number;
-  avgTimeToComplete: number;
 }
 
 export interface FormFieldStats {
   fieldName: string;
-  fieldType?: string;
+  fieldType: FormFieldType;
   focusCount: number;
   blurCount: number;
   errorCount: number;
   avgTimeOnField: number;
-  dropOffRate: number;
 }
 
 export interface FormAnalyticsParams extends DateRangeParams {
@@ -688,6 +696,8 @@ export interface FormAnalyticsParams extends DateRangeParams {
 }
 
 export interface TrackFormEventData {
+  visitorId: string;
+  sessionId: string;
   eventType: FormEventType;
   formId: string;
   formName?: string;
@@ -699,7 +709,6 @@ export interface TrackFormEventData {
   timeSinceStart?: number;
   errorMessage?: string;
   success?: boolean;
-  sessionId?: string;
 }
 
 // ============================================================================
@@ -749,5 +758,16 @@ export interface SetDeploymentData {
   gitSha?: string;
   gitBranch?: string;
   deployUrl?: string;
-  source?: 'vercel' | 'netlify' | 'cloudflare' | 'railway' | 'render' | 'fly' | 'heroku' | 'aws' | 'gcp' | 'azure' | 'custom';
+  source?:
+    | "vercel"
+    | "netlify"
+    | "cloudflare"
+    | "railway"
+    | "render"
+    | "fly"
+    | "heroku"
+    | "aws"
+    | "gcp"
+    | "azure"
+    | "custom";
 }

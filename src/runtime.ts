@@ -21,7 +21,7 @@
  * ```
  */
 
-export type Runtime = 'node' | 'edge' | 'unknown';
+export type Runtime = "node" | "edge" | "unknown";
 
 /**
  * Detect the current JavaScript runtime environment
@@ -45,30 +45,30 @@ export type Runtime = 'node' | 'edge' | 'unknown';
  * ```
  */
 export function detectRuntime(): Runtime {
+  type GlobalEdge = typeof globalThis & {
+    EdgeRuntime?: unknown;
+    Deno?: unknown;
+    process?: { versions?: { node?: string } };
+  };
+
+  const globalRef = globalThis as GlobalEdge;
+  const isNode = typeof globalRef.process?.versions?.node === "string";
+  const hasEdgeRuntime = typeof globalRef.EdgeRuntime !== "undefined";
+  const hasDeno = typeof globalRef.Deno !== "undefined";
+  const hasWebAssembly = typeof WebAssembly !== "undefined";
+  const hasResponse = typeof Response !== "undefined";
+
   // Check for Edge Runtime indicators
-  if (
-    // @ts-ignore - Edge Runtime global
-    typeof EdgeRuntime !== 'undefined' ||
-    // @ts-ignore - Vercel Edge Runtime
-    globalThis.EdgeRuntime !== undefined ||
-    // @ts-ignore - Netlify Edge Functions use Deno
-    typeof Deno !== 'undefined' ||
-    // @ts-ignore - Cloudflare Workers
-    typeof WebAssembly !== 'undefined' && typeof Response !== 'undefined' && !process?.versions?.node
-  ) {
-    return 'edge';
+  if (hasEdgeRuntime || hasDeno || (hasWebAssembly && hasResponse && !isNode)) {
+    return "edge";
   }
 
   // Check for Node.js indicators
-  if (
-    typeof process !== 'undefined' &&
-    process.versions != null &&
-    process.versions.node != null
-  ) {
-    return 'node';
+  if (typeof process !== "undefined" && process.versions != null && process.versions.node != null) {
+    return "node";
   }
 
-  return 'unknown';
+  return "unknown";
 }
 
 /**
@@ -86,7 +86,7 @@ export function detectRuntime(): Runtime {
  * ```
  */
 export function isNodeRuntime(): boolean {
-  return detectRuntime() === 'node';
+  return detectRuntime() === "node";
 }
 
 /**
@@ -103,7 +103,7 @@ export function isNodeRuntime(): boolean {
  * ```
  */
 export function isEdgeRuntime(): boolean {
-  return detectRuntime() === 'edge';
+  return detectRuntime() === "edge";
 }
 
 /**
@@ -129,12 +129,12 @@ export function getRuntimeCapabilities() {
 
   return {
     runtime,
-    isNode: runtime === 'node',
-    isEdge: runtime === 'edge',
-    supportsFileSystem: runtime === 'node',
-    supportsWebCrypto: typeof crypto !== 'undefined' && typeof crypto.subtle !== 'undefined',
-    supportsFetch: typeof fetch !== 'undefined',
-    supportsStreams: typeof ReadableStream !== 'undefined',
+    isNode: runtime === "node",
+    isEdge: runtime === "edge",
+    supportsFileSystem: runtime === "node",
+    supportsWebCrypto: typeof crypto !== "undefined" && typeof crypto.subtle !== "undefined",
+    supportsFetch: typeof fetch !== "undefined",
+    supportsStreams: typeof ReadableStream !== "undefined",
   };
 }
 
@@ -158,7 +158,7 @@ export function assertRuntime(expected: Runtime): void {
   if (actual !== expected) {
     throw new Error(
       `Expected ${expected} runtime, but detected ${actual}. ` +
-      `This code requires ${expected} runtime to function correctly.`,
+        `This code requires ${expected} runtime to function correctly.`,
     );
   }
 }

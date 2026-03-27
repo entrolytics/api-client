@@ -1,5 +1,5 @@
-import type { ApiClient } from '../client';
-import type { ApiResponse, CreateSegmentData, Segment, UpdateSegmentData } from '../types';
+import type { ApiClient } from "../client";
+import type { ApiResponse, CreateSegmentData, Segment, UpdateSegmentData } from "../types";
 
 export function createSegmentsEndpoints(client: ApiClient) {
   return {

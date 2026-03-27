@@ -1,4 +1,4 @@
-import { ApiClient, type ClientConfig } from './client';
+import { ApiClient, type ClientConfig } from "./client";
 import {
   createAdminEndpoints,
   createAuthEndpoints,
@@ -17,9 +17,9 @@ import {
   createUsersEndpoints,
   createWebhooksEndpoints,
   createWebsitesEndpoints,
-} from './endpoints';
+} from "./endpoints";
 
-export type { ClientConfig } from './client';
+export type { ClientConfig } from "./client";
 // Re-export only constants and utilities from shared (not type definitions to avoid conflicts)
 export {
   PLANS,
@@ -31,6 +31,7 @@ export {
   ENV_VAR_NAMES,
   CLI_CONFIG,
   EVENT_TYPES,
+  SDK_EVENT_TYPES,
   VITAL_TYPES,
   VITAL_RATINGS,
   VITAL_THRESHOLDS,
@@ -60,9 +61,9 @@ export {
   isUsageCritical,
   getVitalRating,
   detectDeploymentContext,
-} from '@entrolytics/shared';
+} from "@entrolytics/shared";
 // Export all local types (API-specific type definitions)
-export * from './types';
+export * from "./types";
 
 /**
  * Entrolytics API client with all endpoints.
@@ -72,148 +73,148 @@ export interface EntrolyticsClient {
   auth: ReturnType<typeof createAuthEndpoints>;
 
   // Me endpoints
-  getMe: ReturnType<typeof createMeEndpoints>['getMe'];
-  updateMyPassword: ReturnType<typeof createMeEndpoints>['updateMyPassword'];
-  getMyWebsites: ReturnType<typeof createMeEndpoints>['getMyWebsites'];
-  getMyOrgs: ReturnType<typeof createMeEndpoints>['getMyOrgs'];
+  getMe: ReturnType<typeof createMeEndpoints>["getMe"];
+  updateMyPassword: ReturnType<typeof createMeEndpoints>["updateMyPassword"];
+  getMyWebsites: ReturnType<typeof createMeEndpoints>["getMyWebsites"];
+  getMyOrgs: ReturnType<typeof createMeEndpoints>["getMyOrgs"];
 
   // User endpoints
-  getUsers: ReturnType<typeof createUsersEndpoints>['getUsers'];
-  createUser: ReturnType<typeof createUsersEndpoints>['createUser'];
-  getUser: ReturnType<typeof createUsersEndpoints>['getUser'];
-  updateUser: ReturnType<typeof createUsersEndpoints>['updateUser'];
-  deleteUser: ReturnType<typeof createUsersEndpoints>['deleteUser'];
-  getUserWebsites: ReturnType<typeof createUsersEndpoints>['getUserWebsites'];
-  getUserUsage: ReturnType<typeof createUsersEndpoints>['getUserUsage'];
+  getUsers: ReturnType<typeof createUsersEndpoints>["getUsers"];
+  createUser: ReturnType<typeof createUsersEndpoints>["createUser"];
+  getUser: ReturnType<typeof createUsersEndpoints>["getUser"];
+  updateUser: ReturnType<typeof createUsersEndpoints>["updateUser"];
+  deleteUser: ReturnType<typeof createUsersEndpoints>["deleteUser"];
+  getUserWebsites: ReturnType<typeof createUsersEndpoints>["getUserWebsites"];
+  getUserUsage: ReturnType<typeof createUsersEndpoints>["getUserUsage"];
 
   // Organization endpoints
-  getOrgs: ReturnType<typeof createOrgsEndpoints>['getOrgs'];
-  createOrg: ReturnType<typeof createOrgsEndpoints>['createOrg'];
-  joinOrg: ReturnType<typeof createOrgsEndpoints>['joinOrg'];
-  getOrg: ReturnType<typeof createOrgsEndpoints>['getOrg'];
-  updateOrg: ReturnType<typeof createOrgsEndpoints>['updateOrg'];
-  deleteOrg: ReturnType<typeof createOrgsEndpoints>['deleteOrg'];
-  getOrgUsers: ReturnType<typeof createOrgsEndpoints>['getOrgUsers'];
-  addOrgUser: ReturnType<typeof createOrgsEndpoints>['addOrgUser'];
-  updateOrgUser: ReturnType<typeof createOrgsEndpoints>['updateOrgUser'];
-  removeOrgUser: ReturnType<typeof createOrgsEndpoints>['removeOrgUser'];
-  getOrgWebsites: ReturnType<typeof createOrgsEndpoints>['getOrgWebsites'];
-  addOrgWebsite: ReturnType<typeof createOrgsEndpoints>['addOrgWebsite'];
-  removeOrgWebsite: ReturnType<typeof createOrgsEndpoints>['removeOrgWebsite'];
+  getOrgs: ReturnType<typeof createOrgsEndpoints>["getOrgs"];
+  createOrg: ReturnType<typeof createOrgsEndpoints>["createOrg"];
+  joinOrg: ReturnType<typeof createOrgsEndpoints>["joinOrg"];
+  getOrg: ReturnType<typeof createOrgsEndpoints>["getOrg"];
+  updateOrg: ReturnType<typeof createOrgsEndpoints>["updateOrg"];
+  deleteOrg: ReturnType<typeof createOrgsEndpoints>["deleteOrg"];
+  getOrgUsers: ReturnType<typeof createOrgsEndpoints>["getOrgUsers"];
+  addOrgUser: ReturnType<typeof createOrgsEndpoints>["addOrgUser"];
+  updateOrgUser: ReturnType<typeof createOrgsEndpoints>["updateOrgUser"];
+  removeOrgUser: ReturnType<typeof createOrgsEndpoints>["removeOrgUser"];
+  getOrgWebsites: ReturnType<typeof createOrgsEndpoints>["getOrgWebsites"];
+  addOrgWebsite: ReturnType<typeof createOrgsEndpoints>["addOrgWebsite"];
+  removeOrgWebsite: ReturnType<typeof createOrgsEndpoints>["removeOrgWebsite"];
 
   // Website endpoints
-  getWebsites: ReturnType<typeof createWebsitesEndpoints>['getWebsites'];
-  createWebsite: ReturnType<typeof createWebsitesEndpoints>['createWebsite'];
-  getWebsite: ReturnType<typeof createWebsitesEndpoints>['getWebsite'];
-  updateWebsite: ReturnType<typeof createWebsitesEndpoints>['updateWebsite'];
-  deleteWebsite: ReturnType<typeof createWebsitesEndpoints>['deleteWebsite'];
-  resetWebsite: ReturnType<typeof createWebsitesEndpoints>['resetWebsite'];
-  transferWebsite: ReturnType<typeof createWebsitesEndpoints>['transferWebsite'];
-  getWebsiteStats: ReturnType<typeof createWebsitesEndpoints>['getWebsiteStats'];
-  getWebsitePageviews: ReturnType<typeof createWebsitesEndpoints>['getWebsitePageviews'];
-  getWebsiteMetrics: ReturnType<typeof createWebsitesEndpoints>['getWebsiteMetrics'];
+  getWebsites: ReturnType<typeof createWebsitesEndpoints>["getWebsites"];
+  createWebsite: ReturnType<typeof createWebsitesEndpoints>["createWebsite"];
+  getWebsite: ReturnType<typeof createWebsitesEndpoints>["getWebsite"];
+  updateWebsite: ReturnType<typeof createWebsitesEndpoints>["updateWebsite"];
+  deleteWebsite: ReturnType<typeof createWebsitesEndpoints>["deleteWebsite"];
+  resetWebsite: ReturnType<typeof createWebsitesEndpoints>["resetWebsite"];
+  transferWebsite: ReturnType<typeof createWebsitesEndpoints>["transferWebsite"];
+  getWebsiteStats: ReturnType<typeof createWebsitesEndpoints>["getWebsiteStats"];
+  getWebsitePageviews: ReturnType<typeof createWebsitesEndpoints>["getWebsitePageviews"];
+  getWebsiteMetrics: ReturnType<typeof createWebsitesEndpoints>["getWebsiteMetrics"];
   getWebsiteExpandedMetrics: ReturnType<
     typeof createWebsitesEndpoints
-  >['getWebsiteExpandedMetrics'];
-  getWebsiteEvents: ReturnType<typeof createWebsitesEndpoints>['getWebsiteEvents'];
-  getWebsiteEventsSeries: ReturnType<typeof createWebsitesEndpoints>['getWebsiteEventsSeries'];
-  getWebsiteActive: ReturnType<typeof createWebsitesEndpoints>['getWebsiteActive'];
-  getWebsiteDateRange: ReturnType<typeof createWebsitesEndpoints>['getWebsiteDateRange'];
-  getWebsiteValues: ReturnType<typeof createWebsitesEndpoints>['getWebsiteValues'];
-  getRealtimeData: ReturnType<typeof createWebsitesEndpoints>['getRealtimeData'];
-  exportWebsiteData: ReturnType<typeof createWebsitesEndpoints>['exportWebsiteData'];
+  >["getWebsiteExpandedMetrics"];
+  getWebsiteEvents: ReturnType<typeof createWebsitesEndpoints>["getWebsiteEvents"];
+  getWebsiteEventsSeries: ReturnType<typeof createWebsitesEndpoints>["getWebsiteEventsSeries"];
+  getWebsiteActive: ReturnType<typeof createWebsitesEndpoints>["getWebsiteActive"];
+  getWebsiteDateRange: ReturnType<typeof createWebsitesEndpoints>["getWebsiteDateRange"];
+  getWebsiteValues: ReturnType<typeof createWebsitesEndpoints>["getWebsiteValues"];
+  getRealtimeData: ReturnType<typeof createWebsitesEndpoints>["getRealtimeData"];
+  exportWebsiteData: ReturnType<typeof createWebsitesEndpoints>["exportWebsiteData"];
 
   // Phase 2: Web Vitals endpoints (NG only)
-  getWebsiteVitals: ReturnType<typeof createWebsitesEndpoints>['getWebsiteVitals'];
-  getWebsiteVitalEvents: ReturnType<typeof createWebsitesEndpoints>['getWebsiteVitalEvents'];
-  trackVital: ReturnType<typeof createWebsitesEndpoints>['trackVital'];
-  trackVitalsBatch: ReturnType<typeof createWebsitesEndpoints>['trackVitalsBatch'];
+  getWebsiteVitals: ReturnType<typeof createWebsitesEndpoints>["getWebsiteVitals"];
+  getWebsiteVitalEvents: ReturnType<typeof createWebsitesEndpoints>["getWebsiteVitalEvents"];
+  trackVital: ReturnType<typeof createWebsitesEndpoints>["trackVital"];
+  trackVitalsBatch: ReturnType<typeof createWebsitesEndpoints>["trackVitalsBatch"];
 
   // Phase 2: Form Analytics endpoints (NG only)
-  getWebsiteForms: ReturnType<typeof createWebsitesEndpoints>['getWebsiteForms'];
-  getFormFields: ReturnType<typeof createWebsitesEndpoints>['getFormFields'];
-  getFormEvents: ReturnType<typeof createWebsitesEndpoints>['getFormEvents'];
-  trackFormEvent: ReturnType<typeof createWebsitesEndpoints>['trackFormEvent'];
-  trackFormEventsBatch: ReturnType<typeof createWebsitesEndpoints>['trackFormEventsBatch'];
+  getWebsiteForms: ReturnType<typeof createWebsitesEndpoints>["getWebsiteForms"];
+  getFormFields: ReturnType<typeof createWebsitesEndpoints>["getFormFields"];
+  getFormEvents: ReturnType<typeof createWebsitesEndpoints>["getFormEvents"];
+  trackFormEvent: ReturnType<typeof createWebsitesEndpoints>["trackFormEvent"];
+  trackFormEventsBatch: ReturnType<typeof createWebsitesEndpoints>["trackFormEventsBatch"];
 
   // Phase 2: Deployment endpoints (NG only)
-  getWebsiteDeployments: ReturnType<typeof createWebsitesEndpoints>['getWebsiteDeployments'];
-  getDeployment: ReturnType<typeof createWebsitesEndpoints>['getDeployment'];
-  compareDeployments: ReturnType<typeof createWebsitesEndpoints>['compareDeployments'];
-  setDeployment: ReturnType<typeof createWebsitesEndpoints>['setDeployment'];
+  getWebsiteDeployments: ReturnType<typeof createWebsitesEndpoints>["getWebsiteDeployments"];
+  getDeployment: ReturnType<typeof createWebsitesEndpoints>["getDeployment"];
+  compareDeployments: ReturnType<typeof createWebsitesEndpoints>["compareDeployments"];
+  setDeployment: ReturnType<typeof createWebsitesEndpoints>["setDeployment"];
 
   // Session endpoints
-  getWebsiteSessions: ReturnType<typeof createSessionsEndpoints>['getWebsiteSessions'];
-  getWebsiteSessionStats: ReturnType<typeof createSessionsEndpoints>['getWebsiteSessionStats'];
-  getWeeklyTraffic: ReturnType<typeof createSessionsEndpoints>['getWeeklyTraffic'];
-  getSession: ReturnType<typeof createSessionsEndpoints>['getSession'];
-  getSessionActivity: ReturnType<typeof createSessionsEndpoints>['getSessionActivity'];
-  getSessionProperties: ReturnType<typeof createSessionsEndpoints>['getSessionProperties'];
+  getWebsiteSessions: ReturnType<typeof createSessionsEndpoints>["getWebsiteSessions"];
+  getWebsiteSessionStats: ReturnType<typeof createSessionsEndpoints>["getWebsiteSessionStats"];
+  getWeeklyTraffic: ReturnType<typeof createSessionsEndpoints>["getWeeklyTraffic"];
+  getSession: ReturnType<typeof createSessionsEndpoints>["getSession"];
+  getSessionActivity: ReturnType<typeof createSessionsEndpoints>["getSessionActivity"];
+  getSessionProperties: ReturnType<typeof createSessionsEndpoints>["getSessionProperties"];
 
   // Event data endpoints
-  getEventDataStats: ReturnType<typeof createEventsEndpoints>['getEventDataStats'];
-  getEventDataEvents: ReturnType<typeof createEventsEndpoints>['getEventDataEvents'];
-  getEventDataFields: ReturnType<typeof createEventsEndpoints>['getEventDataFields'];
-  getEventDataValues: ReturnType<typeof createEventsEndpoints>['getEventDataValues'];
-  getEventDataProperties: ReturnType<typeof createEventsEndpoints>['getEventDataProperties'];
-  getEventData: ReturnType<typeof createEventsEndpoints>['getEventData'];
-  getSessionDataProperties: ReturnType<typeof createEventsEndpoints>['getSessionDataProperties'];
-  getSessionDataValues: ReturnType<typeof createEventsEndpoints>['getSessionDataValues'];
-  sendTestEvent: ReturnType<typeof createEventsEndpoints>['sendTestEvent'];
+  getEventDataStats: ReturnType<typeof createEventsEndpoints>["getEventDataStats"];
+  getEventDataEvents: ReturnType<typeof createEventsEndpoints>["getEventDataEvents"];
+  getEventDataFields: ReturnType<typeof createEventsEndpoints>["getEventDataFields"];
+  getEventDataValues: ReturnType<typeof createEventsEndpoints>["getEventDataValues"];
+  getEventDataProperties: ReturnType<typeof createEventsEndpoints>["getEventDataProperties"];
+  getEventData: ReturnType<typeof createEventsEndpoints>["getEventData"];
+  getSessionDataProperties: ReturnType<typeof createEventsEndpoints>["getSessionDataProperties"];
+  getSessionDataValues: ReturnType<typeof createEventsEndpoints>["getSessionDataValues"];
+  sendTestEvent: ReturnType<typeof createEventsEndpoints>["sendTestEvent"];
 
   // Report endpoints
-  getReports: ReturnType<typeof createReportsEndpoints>['getReports'];
-  createReport: ReturnType<typeof createReportsEndpoints>['createReport'];
-  getReport: ReturnType<typeof createReportsEndpoints>['getReport'];
-  updateReport: ReturnType<typeof createReportsEndpoints>['updateReport'];
-  deleteReport: ReturnType<typeof createReportsEndpoints>['deleteReport'];
-  runFunnelReport: ReturnType<typeof createReportsEndpoints>['runFunnelReport'];
-  runRetentionReport: ReturnType<typeof createReportsEndpoints>['runRetentionReport'];
-  runJourneyReport: ReturnType<typeof createReportsEndpoints>['runJourneyReport'];
-  runGoalReport: ReturnType<typeof createReportsEndpoints>['runGoalReport'];
-  runAttributionReport: ReturnType<typeof createReportsEndpoints>['runAttributionReport'];
-  runRevenueReport: ReturnType<typeof createReportsEndpoints>['runRevenueReport'];
-  runUTMReport: ReturnType<typeof createReportsEndpoints>['runUTMReport'];
-  runBreakdownReport: ReturnType<typeof createReportsEndpoints>['runBreakdownReport'];
+  getReports: ReturnType<typeof createReportsEndpoints>["getReports"];
+  createReport: ReturnType<typeof createReportsEndpoints>["createReport"];
+  getReport: ReturnType<typeof createReportsEndpoints>["getReport"];
+  updateReport: ReturnType<typeof createReportsEndpoints>["updateReport"];
+  deleteReport: ReturnType<typeof createReportsEndpoints>["deleteReport"];
+  runFunnelReport: ReturnType<typeof createReportsEndpoints>["runFunnelReport"];
+  runRetentionReport: ReturnType<typeof createReportsEndpoints>["runRetentionReport"];
+  runJourneyReport: ReturnType<typeof createReportsEndpoints>["runJourneyReport"];
+  runGoalReport: ReturnType<typeof createReportsEndpoints>["runGoalReport"];
+  runAttributionReport: ReturnType<typeof createReportsEndpoints>["runAttributionReport"];
+  runRevenueReport: ReturnType<typeof createReportsEndpoints>["runRevenueReport"];
+  runUTMReport: ReturnType<typeof createReportsEndpoints>["runUTMReport"];
+  runBreakdownReport: ReturnType<typeof createReportsEndpoints>["runBreakdownReport"];
 
   // Segment endpoints
-  getSegments: ReturnType<typeof createSegmentsEndpoints>['getSegments'];
-  createSegment: ReturnType<typeof createSegmentsEndpoints>['createSegment'];
-  getSegment: ReturnType<typeof createSegmentsEndpoints>['getSegment'];
-  updateSegment: ReturnType<typeof createSegmentsEndpoints>['updateSegment'];
-  deleteSegment: ReturnType<typeof createSegmentsEndpoints>['deleteSegment'];
+  getSegments: ReturnType<typeof createSegmentsEndpoints>["getSegments"];
+  createSegment: ReturnType<typeof createSegmentsEndpoints>["createSegment"];
+  getSegment: ReturnType<typeof createSegmentsEndpoints>["getSegment"];
+  updateSegment: ReturnType<typeof createSegmentsEndpoints>["updateSegment"];
+  deleteSegment: ReturnType<typeof createSegmentsEndpoints>["deleteSegment"];
 
   // Link endpoints
-  getLinks: ReturnType<typeof createLinksEndpoints>['getLinks'];
-  getOrgLinks: ReturnType<typeof createLinksEndpoints>['getOrgLinks'];
-  createLink: ReturnType<typeof createLinksEndpoints>['createLink'];
-  getLink: ReturnType<typeof createLinksEndpoints>['getLink'];
-  updateLink: ReturnType<typeof createLinksEndpoints>['updateLink'];
-  deleteLink: ReturnType<typeof createLinksEndpoints>['deleteLink'];
-  getLinkStats: ReturnType<typeof createLinksEndpoints>['getLinkStats'];
+  getLinks: ReturnType<typeof createLinksEndpoints>["getLinks"];
+  getOrgLinks: ReturnType<typeof createLinksEndpoints>["getOrgLinks"];
+  createLink: ReturnType<typeof createLinksEndpoints>["createLink"];
+  getLink: ReturnType<typeof createLinksEndpoints>["getLink"];
+  updateLink: ReturnType<typeof createLinksEndpoints>["updateLink"];
+  deleteLink: ReturnType<typeof createLinksEndpoints>["deleteLink"];
+  getLinkStats: ReturnType<typeof createLinksEndpoints>["getLinkStats"];
 
   // Pixel endpoints
-  getPixels: ReturnType<typeof createPixelsEndpoints>['getPixels'];
-  getOrgPixels: ReturnType<typeof createPixelsEndpoints>['getOrgPixels'];
-  createPixel: ReturnType<typeof createPixelsEndpoints>['createPixel'];
-  getPixel: ReturnType<typeof createPixelsEndpoints>['getPixel'];
-  updatePixel: ReturnType<typeof createPixelsEndpoints>['updatePixel'];
-  deletePixel: ReturnType<typeof createPixelsEndpoints>['deletePixel'];
+  getPixels: ReturnType<typeof createPixelsEndpoints>["getPixels"];
+  getOrgPixels: ReturnType<typeof createPixelsEndpoints>["getOrgPixels"];
+  createPixel: ReturnType<typeof createPixelsEndpoints>["createPixel"];
+  getPixel: ReturnType<typeof createPixelsEndpoints>["getPixel"];
+  updatePixel: ReturnType<typeof createPixelsEndpoints>["updatePixel"];
+  deletePixel: ReturnType<typeof createPixelsEndpoints>["deletePixel"];
 
   // Board endpoints (Custom Dashboards)
-  getBoards: ReturnType<typeof createBoardsEndpoints>['getBoards'];
-  getBoard: ReturnType<typeof createBoardsEndpoints>['getBoard'];
-  createBoard: ReturnType<typeof createBoardsEndpoints>['createBoard'];
-  updateBoard: ReturnType<typeof createBoardsEndpoints>['updateBoard'];
-  deleteBoard: ReturnType<typeof createBoardsEndpoints>['deleteBoard'];
-  getBoardWidgets: ReturnType<typeof createBoardsEndpoints>['getBoardWidgets'];
-  getBoardWidget: ReturnType<typeof createBoardsEndpoints>['getBoardWidget'];
-  createBoardWidget: ReturnType<typeof createBoardsEndpoints>['createBoardWidget'];
-  updateBoardWidget: ReturnType<typeof createBoardsEndpoints>['updateBoardWidget'];
-  deleteBoardWidget: ReturnType<typeof createBoardsEndpoints>['deleteBoardWidget'];
+  getBoards: ReturnType<typeof createBoardsEndpoints>["getBoards"];
+  getBoard: ReturnType<typeof createBoardsEndpoints>["getBoard"];
+  createBoard: ReturnType<typeof createBoardsEndpoints>["createBoard"];
+  updateBoard: ReturnType<typeof createBoardsEndpoints>["updateBoard"];
+  deleteBoard: ReturnType<typeof createBoardsEndpoints>["deleteBoard"];
+  getBoardWidgets: ReturnType<typeof createBoardsEndpoints>["getBoardWidgets"];
+  getBoardWidget: ReturnType<typeof createBoardsEndpoints>["getBoardWidget"];
+  createBoardWidget: ReturnType<typeof createBoardsEndpoints>["createBoardWidget"];
+  updateBoardWidget: ReturnType<typeof createBoardsEndpoints>["updateBoardWidget"];
+  deleteBoardWidget: ReturnType<typeof createBoardsEndpoints>["deleteBoardWidget"];
 
   // Config endpoints
-  getConfig: ReturnType<typeof createConfigEndpoints>['get'];
+  getConfig: ReturnType<typeof createConfigEndpoints>["get"];
 
   // Admin endpoints (admin only)
   admin: ReturnType<typeof createAdminEndpoints>;
@@ -337,7 +338,7 @@ export {
   getRuntimeCapabilities,
   assertRuntime,
   type Runtime,
-} from './runtime';
+} from "./runtime";
 
 // Export edge helpers
 export {
@@ -349,7 +350,7 @@ export {
   getClientIp,
   type EdgeFetchOptions,
   type RegionInfo,
-} from './edge-helpers';
+} from "./edge-helpers";
 
 // Default export for convenience
 export default getClient;

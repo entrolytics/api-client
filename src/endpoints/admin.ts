@@ -1,4 +1,4 @@
-import type { ApiClient } from '../client';
+import type { ApiClient } from "../client";
 
 export interface AdminOrgParams {
   orgId: string;
@@ -17,7 +17,7 @@ export function createAdminEndpoints(client: ApiClient) {
     /**
      * Get all organizations (admin only)
      */
-    getOrgs: () => client.get('/admin/orgs'),
+    getOrgs: () => client.get("/admin/orgs"),
 
     /**
      * Get organization details (admin only)
@@ -27,7 +27,7 @@ export function createAdminEndpoints(client: ApiClient) {
     /**
      * Get all users (admin only)
      */
-    getUsers: () => client.get('/admin/users'),
+    getUsers: () => client.get("/admin/users"),
 
     /**
      * Get user details (admin only)
@@ -37,7 +37,7 @@ export function createAdminEndpoints(client: ApiClient) {
     /**
      * Get all websites (admin only)
      */
-    getWebsites: () => client.get('/admin/websites'),
+    getWebsites: () => client.get("/admin/websites"),
 
     /**
      * Get website details (admin only)
@@ -47,6 +47,6 @@ export function createAdminEndpoints(client: ApiClient) {
     /**
      * Run admin setup
      */
-    setup: () => client.post('/admin/setup', {}),
+    setup: () => client.post("/admin/setup", {}),
   };
 }

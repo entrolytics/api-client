@@ -1,4 +1,4 @@
-import type { ApiClient } from '../client';
+import type { ApiClient } from "../client";
 
 export interface IntegrationWordPressParams {
   data: unknown;
@@ -10,6 +10,6 @@ export function createIntegrationsEndpoints(client: ApiClient) {
      * Handle WordPress integration
      */
     wordpress: (params: IntegrationWordPressParams) =>
-      client.post('/integrations/wordpress', params.data),
+      client.post("/integrations/wordpress", params.data),
   };
 }

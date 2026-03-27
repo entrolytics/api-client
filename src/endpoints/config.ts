@@ -1,4 +1,4 @@
-import type { ApiClient } from '../client';
+import type { ApiClient } from "../client";
 
 export interface ConfigResponse {
   cloudMode: string;
@@ -22,6 +22,6 @@ export function createConfigEndpoints(client: ApiClient) {
     /**
      * Get system configuration
      */
-    get: () => client.get<ConfigResponse>('/config'),
+    get: () => client.get<ConfigResponse>("/config"),
   };
 }

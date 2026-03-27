@@ -1,4 +1,4 @@
-import type { ApiClient } from '../client';
+import type { ApiClient } from "../client";
 import type {
   ApiResponse,
   Board,
@@ -7,7 +7,7 @@ import type {
   CreateBoardWidgetData,
   UpdateBoardData,
   UpdateBoardWidgetData,
-} from '../types';
+} from "../types";
 
 export function createBoardsEndpoints(client: ApiClient) {
   return {
@@ -29,7 +29,7 @@ export function createBoardsEndpoints(client: ApiClient) {
      * Create a new board.
      */
     createBoard(data: CreateBoardData): Promise<ApiResponse<Board>> {
-      return client.post<Board>('/boards', data);
+      return client.post<Board>("/boards", data);
     },
 
     /**

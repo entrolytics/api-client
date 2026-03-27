@@ -1,4 +1,4 @@
-import type { ApiClient } from '../client';
+import type { ApiClient } from "../client";
 import type {
   AccountEntitlements,
   AccountUsage,
@@ -7,7 +7,7 @@ import type {
   CheckoutResponse,
   PortalResponse,
   Subscription,
-} from '../types';
+} from "../types";
 
 export function createBillingEndpoints(client: ApiClient) {
   return {
@@ -15,37 +15,35 @@ export function createBillingEndpoints(client: ApiClient) {
      * Get current account usage for the billing period.
      */
     getUsage(): Promise<ApiResponse<AccountUsage>> {
-      return client.get<AccountUsage>('/billing/usage');
+      return client.get<AccountUsage>("/billing/usage");
     },
 
     /**
      * Get account entitlements based on current plan.
      */
     getEntitlements(): Promise<ApiResponse<AccountEntitlements>> {
-      return client.get<AccountEntitlements>('/billing/entitlements');
+      return client.get<AccountEntitlements>("/billing/entitlements");
     },
 
     /**
      * Get current subscription details.
      */
     getSubscription(): Promise<ApiResponse<Subscription>> {
-      return client.get<Subscription>('/billing/subscription');
+      return client.get<Subscription>("/billing/subscription");
     },
 
     /**
      * Create a Stripe checkout session for upgrading/changing plan.
      */
-    createCheckoutSession(
-      options: CheckoutOptions
-    ): Promise<ApiResponse<CheckoutResponse>> {
-      return client.post<CheckoutResponse>('/billing/checkout', options);
+    createCheckoutSession(options: CheckoutOptions): Promise<ApiResponse<CheckoutResponse>> {
+      return client.post<CheckoutResponse>("/billing/checkout", options);
     },
 
     /**
      * Create a Stripe billing portal session for managing subscription.
      */
     createPortalSession(): Promise<ApiResponse<PortalResponse>> {
-      return client.post<PortalResponse>('/billing/portal');
+      return client.post<PortalResponse>("/billing/portal");
     },
   };
 }

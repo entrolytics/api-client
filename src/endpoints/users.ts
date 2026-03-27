@@ -1,5 +1,5 @@
-import type { ApiClient } from '../client';
-import type { ApiResponse, CreateUserData, UpdateUserData, User, Website } from '../types';
+import type { ApiClient } from "../client";
+import type { ApiResponse, CreateUserData, UpdateUserData, User, Website } from "../types";
 
 export function createUsersEndpoints(client: ApiClient) {
   return {
@@ -7,14 +7,14 @@ export function createUsersEndpoints(client: ApiClient) {
      * Get all users (admin only).
      */
     getUsers(): Promise<ApiResponse<User[]>> {
-      return client.get<User[]>('/users');
+      return client.get<User[]>("/users");
     },
 
     /**
      * Create a new user (admin only).
      */
     createUser(data: CreateUserData): Promise<ApiResponse<User>> {
-      return client.post<User>('/users', data);
+      return client.post<User>("/users", data);
     },
 
     /**

@@ -39,18 +39,26 @@
  * ```
  */
 export function getEdgeEnv(key: string, defaultValue?: string): string | undefined {
+  type EdgeGlobals = typeof globalThis & {
+    Deno?: {
+      env?: {
+        get: (key: string) => string | undefined;
+      };
+    };
+  };
+
+  const globals = globalThis as EdgeGlobals;
+
   // Try process.env first (works in many edge runtimes)
-  if (typeof process !== 'undefined' && process.env) {
+  if (typeof process !== "undefined" && process.env) {
     const value = process.env[key];
     if (value !== undefined) return value;
   }
 
   // Try Deno.env for Netlify Edge Functions
-  // @ts-ignore - Deno global
-  if (typeof Deno !== 'undefined' && typeof Deno.env !== 'undefined') {
+  if (globals.Deno?.env && typeof globals.Deno.env.get === "function") {
     try {
-      // @ts-ignore
-      return Deno.env.get(key) || defaultValue;
+      return globals.Deno.env.get(key) || defaultValue;
     } catch {
       // Deno.env.get can throw if permissions denied
     }
@@ -107,12 +115,7 @@ export interface EdgeFetchOptions extends RequestInit {
  * ```
  */
 export function createEdgeFetch(defaultOptions: EdgeFetchOptions = {}) {
-  const {
-    retries = 3,
-    retryDelay = 1000,
-    timeout = 30000,
-    ...fetchDefaults
-  } = defaultOptions;
+  const { retries = 3, retryDelay = 1000, timeout = 30000, ...fetchDefaults } = defaultOptions;
 
   return async function edgeFetch(
     input: RequestInfo | URL,
@@ -149,7 +152,7 @@ export function createEdgeFetch(defaultOptions: EdgeFetchOptions = {}) {
         lastError = error instanceof Error ? error : new Error(String(error));
 
         // Don't retry on abort errors (timeout)
-        if (lastError.name === 'AbortError') {
+        if (lastError.name === "AbortError") {
           throw new Error(`Request timeout after ${finalTimeout}ms`);
         }
       }
@@ -157,17 +160,17 @@ export function createEdgeFetch(defaultOptions: EdgeFetchOptions = {}) {
       // Wait before retrying (exponential backoff)
       if (attempt < finalRetries) {
         const delay = finalDelay * Math.pow(2, attempt);
-        await new Promise(resolve => setTimeout(resolve, delay));
+        await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
 
-    throw lastError || new Error('Request failed');
+    throw lastError || new Error("Request failed");
   };
 }
 
 export interface RegionInfo {
   /** Cloud provider (vercel, netlify, cloudflare, unknown) */
-  provider: 'vercel' | 'netlify' | 'cloudflare' | 'unknown';
+  provider: "vercel" | "netlify" | "cloudflare" | "unknown";
   /** Region code (e.g., 'iad1', 'us-east-1') */
   region?: string;
   /** Whether running in edge runtime */
@@ -189,37 +192,42 @@ export interface RegionInfo {
  * ```
  */
 export function getRegionInfo(): RegionInfo {
+  type EdgeGlobals = typeof globalThis & {
+    Deno?: unknown;
+    caches?: CacheStorage;
+  };
+
+  const globals = globalThis as EdgeGlobals;
+
   // Vercel Edge Runtime
-  if (getEdgeEnv('VERCEL')) {
+  if (getEdgeEnv("VERCEL")) {
     return {
-      provider: 'vercel',
-      region: getEdgeEnv('VERCEL_REGION'),
-      isEdge: getEdgeEnv('VERCEL_EDGE_RUNTIME') === '1',
+      provider: "vercel",
+      region: getEdgeEnv("VERCEL_REGION"),
+      isEdge: getEdgeEnv("VERCEL_EDGE_RUNTIME") === "1",
     };
   }
 
   // Netlify Edge Functions
-  // @ts-ignore
-  if (typeof Deno !== 'undefined' && getEdgeEnv('NETLIFY')) {
+  if (typeof globals.Deno !== "undefined" && getEdgeEnv("NETLIFY")) {
     return {
-      provider: 'netlify',
-      region: getEdgeEnv('NETLIFY_REGION'),
+      provider: "netlify",
+      region: getEdgeEnv("NETLIFY_REGION"),
       isEdge: true,
     };
   }
 
   // Cloudflare Workers
-  // @ts-ignore
-  if (typeof caches !== 'undefined' && typeof WebAssembly !== 'undefined') {
+  if (typeof globals.caches !== "undefined" && typeof WebAssembly !== "undefined") {
     return {
-      provider: 'cloudflare',
+      provider: "cloudflare",
       region: undefined, // Cloudflare doesn't expose region
       isEdge: true,
     };
   }
 
   return {
-    provider: 'unknown',
+    provider: "unknown",
     isEdge: false,
   };
 }
@@ -242,26 +250,26 @@ export function getGeoFromRequest(request: Request) {
   const headers = request.headers;
 
   // Vercel Edge geo headers
-  const vercelCountry = headers.get('x-vercel-ip-country');
+  const vercelCountry = headers.get("x-vercel-ip-country");
   if (vercelCountry) {
     return {
       country: vercelCountry,
-      region: headers.get('x-vercel-ip-country-region'),
-      city: headers.get('x-vercel-ip-city'),
-      latitude: headers.get('x-vercel-ip-latitude'),
-      longitude: headers.get('x-vercel-ip-longitude'),
+      region: headers.get("x-vercel-ip-country-region"),
+      city: headers.get("x-vercel-ip-city"),
+      latitude: headers.get("x-vercel-ip-latitude"),
+      longitude: headers.get("x-vercel-ip-longitude"),
     };
   }
 
   // Cloudflare Workers geo
-  const cfCountry = headers.get('cf-ipcountry');
+  const cfCountry = headers.get("cf-ipcountry");
   if (cfCountry) {
     return {
       country: cfCountry,
-      region: headers.get('cf-region'),
-      city: headers.get('cf-city'),
-      latitude: headers.get('cf-latitude'),
-      longitude: headers.get('cf-longitude'),
+      region: headers.get("cf-region"),
+      city: headers.get("cf-city"),
+      latitude: headers.get("cf-latitude"),
+      longitude: headers.get("cf-longitude"),
     };
   }
 
@@ -293,10 +301,10 @@ export function getClientIp(request: Request): string | undefined {
   const headers = request.headers;
 
   return (
-    headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    headers.get('x-real-ip') ||
-    headers.get('cf-connecting-ip') ||
-    headers.get('x-vercel-forwarded-for') ||
+    headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    headers.get("x-real-ip") ||
+    headers.get("cf-connecting-ip") ||
+    headers.get("x-vercel-forwarded-for") ||
     undefined
   );
 }

@@ -1,11 +1,11 @@
-import type { ApiClient } from '../client';
+import type { ApiClient } from "../client";
 import type {
   ApiResponse,
   DateRangeParams,
   Session,
   SessionActivity,
   SessionStats,
-} from '../types';
+} from "../types";
 
 export function createSessionsEndpoints(client: ApiClient) {
   return {

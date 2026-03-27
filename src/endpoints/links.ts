@@ -1,5 +1,5 @@
-import type { ApiClient } from '../client';
-import type { ApiResponse, CreateLinkData, Link, UpdateLinkData } from '../types';
+import type { ApiClient } from "../client";
+import type { ApiResponse, CreateLinkData, Link, UpdateLinkData } from "../types";
 
 export function createLinksEndpoints(client: ApiClient) {
   return {
@@ -7,7 +7,7 @@ export function createLinksEndpoints(client: ApiClient) {
      * Get all links.
      */
     getLinks(): Promise<ApiResponse<Link[]>> {
-      return client.get<Link[]>('/links');
+      return client.get<Link[]>("/links");
     },
 
     /**
@@ -48,8 +48,8 @@ export function createLinksEndpoints(client: ApiClient) {
     /**
      * Get link statistics.
      */
-    getLinkStats(linkId: string): Promise<ApiResponse<import('../types').Stats>> {
-      return client.get<import('../types').Stats>(`/links/${linkId}/stats`);
+    getLinkStats(linkId: string): Promise<ApiResponse<import("../types").Stats>> {
+      return client.get<import("../types").Stats>(`/links/${linkId}/stats`);
     },
   };
 }

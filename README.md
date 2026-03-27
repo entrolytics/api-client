@@ -1,85 +1,79 @@
-# @entrolytics/api-client
+# ⚠️ DEPRECATED
 
-TypeScript API client for Entrolytics - First-party growth analytics for the edge.
+**This package is deprecated in favor of [`@entrolytics/trpc-client`](../trpc/).**
 
-## Installation
+The new tRPC client provides:
+
+- ✅ Full end-to-end type safety
+- ✅ Auto-completion for all API methods
+- ✅ Automatic request batching
+- ✅ Better error handling
+- ✅ Same functionality, better DX
+
+## Migration Guide
+
+### Installation
 
 ```bash
-npm install @entrolytics/api-client
-# or
-pnpm add @entrolytics/api-client
-# or
-yarn add @entrolytics/api-client
+
+# Remove old client
+
+npm uninstall @entrolytics/api-client
+
+# Install new client
+
+npm install @entrolytics/trpc-client
 ```
 
-## Usage
+### Usage Changes
+
+**Before (REST Client)**:
 
 ```typescript
-import { EntrolyticsClient } from '@entrolytics/api-client';
+import { EntrolyticsClient } from "@entrolytics/api-client";
 
 const client = new EntrolyticsClient({
-  apiKey: 'your-api-key',
-  apiUrl: 'https://api.entrolytics.click', // optional
+  apiUrl: "https://api.entrolytics.click",
+  apiKey: "your-key",
 });
 
-// Track an event
-await client.track({
-  websiteId: 'your-website-id',
-  event: 'pageview',
-  url: 'https://example.com/page',
-  properties: {
-    customProperty: 'value',
-  },
-});
-
-// Get analytics data
-const analytics = await client.analytics.getOverview({
-  websiteId: 'your-website-id',
-  startDate: '2025-01-01',
-  endDate: '2025-01-31',
-});
+const websites = await client.websites.list();
 ```
 
-## Features
+**After (tRPC Client)**:
 
-- 🔒 Type-safe API client
-- 📊 Full analytics API coverage
-- 🚀 Promise-based async/await
-- ⚡ Automatic retry logic
-- 🔄 Request/response interceptors
-- 📝 TypeScript definitions included
+```typescript
+import { createClient } from "@entrolytics/trpc-client";
 
-## API Reference
+const client = createClient({
+  apiUrl: "https://api.entrolytics.click",
+  apiKey: "your-key",
+});
 
-### Constructor Options
+const websites = await client.websites.list.query();
+```
 
-- `apiKey` (string, required): Your Entrolytics API key
-- `apiUrl` (string, optional): Custom API URL (defaults to production)
-- `timeout` (number, optional): Request timeout in ms (default: 5000)
-- `retries` (number, optional): Number of retries on failure (default: 3)
+### Key Differences
 
-### Methods
+1. **Query/Mutation Pattern**: tRPC uses `.query()` for reads and `.mutate()` for writes
+2. **Type Safety**: All types are automatically inferred from the backend
+3. **Error Handling**: Errors are typed and more predictable
 
-#### `track(data: TrackEventData): Promise<void>`
+### API Mapping
 
-Track a single event.
+| Old Method                          | New Method                                |
+| ----------------------------------- | ----------------------------------------- |
+| `client.websites.list()`            | `client.websites.list.query()`            |
+| `client.websites.create(data)`      | `client.websites.create.mutate(data)`     |
+| `client.analytics.overview(params)` | `client.analytics.overview.query(params)` |
+| `client.events.list(params)`        | `client.events.list.query(params)`        |
 
-#### `trackBatch(events: TrackEventData[]): Promise<void>`
+See the [full tRPC client documentation](../trpc/README.md) for complete migration details.
 
-Track multiple events in a single request.
+---
 
-#### `analytics.getOverview(params): Promise<AnalyticsOverview>`
+# @entrolytics/api-client (Legacy)
 
-Get overview analytics for a website.
+REST API client for Entrolytics (no longer maintained).
 
-#### `analytics.getTopPages(params): Promise<TopPage[]>`
-
-Get top pages by pageviews.
-
-#### `analytics.getTopReferrers(params): Promise<TopReferrer[]>`
-
-Get top referrers.
-
-## License
-
-MIT © Entrolytics
+For new projects, use [`@entrolytics/trpc-client`](../trpc/) instead.
