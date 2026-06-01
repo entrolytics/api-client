@@ -534,68 +534,9 @@ export function createWebsitesEndpoints(client: ApiClient) {
      */
     compareDeployments(
       websiteId: string,
-      currentDeployId: string,
-      previousDeployId?: string,
-    ): Promise<ApiResponse<DeploymentComparison>> {
-      return client
-        .get<Deployment[]>(API_ROUTES.deploymentByWebsite(websiteId), { limit: 100 })
-        .then((response) => {
-          if (!response.data || response.data.length === 0) {
-            return {
-              ok: false,
-              status: response.status || 404,
-              error: "No deployments found",
-            };
-          }
-
-          const current = response.data.find((item) => item.deployId === currentDeployId);
-          const previous = previousDeployId
-            ? response.data.find((item) => item.deployId === previousDeployId)
-            : response.data.find((item) => item.deployId !== currentDeployId);
-
-          if (!current) {
-            return {
-              ok: false,
-              status: 404,
-              error: `Deployment not found: ${currentDeployId}`,
-            };
-          }
-
-          const diff = {
-            sessions: current.totalSessions - (previous?.totalSessions ?? 0),
-            pageviews: current.totalPageviews - (previous?.totalPageviews ?? 0),
-            lcp:
-              typeof current.avgLcp === "number"
-                ? current.avgLcp - (previous?.avgLcp ?? 0)
-                : undefined,
-            inp:
-              typeof current.avgInp === "number"
-                ? current.avgInp - (previous?.avgInp ?? 0)
-                : undefined,
-            cls:
-              typeof current.avgCls === "number"
-                ? current.avgCls - (previous?.avgCls ?? 0)
-                : undefined,
-            ttfb:
-              typeof current.avgTtfb === "number"
-                ? current.avgTtfb - (previous?.avgTtfb ?? 0)
-                : undefined,
-            fcp:
-              typeof current.avgFcp === "number"
-                ? current.avgFcp - (previous?.avgFcp ?? 0)
-                : undefined,
-          };
-
-          return {
-            ok: response.ok,
-            status: response.status,
-            data: {
-              current,
-              previous,
-              diff,
-            },
-          };
-        });
+      limit = 10,
+    ): Promise<ApiResponse<DeploymentComparison[]>> {
+      return client.get<DeploymentComparison[]>(API_ROUTES.deploymentCompare(websiteId), { limit });
     },
 
     /**

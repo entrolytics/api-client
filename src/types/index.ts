@@ -35,7 +35,7 @@ export interface DateRangeParams {
 // ============================================================================
 
 export type PlatformRole = "admin" | "user" | "view-only";
-export type OrganizationRole = "admin" | "manager" | "member" | "view-only";
+export type OrganizationRole = "owner" | "admin" | "member" | "viewer";
 
 export interface User {
   id: string;
@@ -61,8 +61,6 @@ export interface User {
   orgRole?: OrganizationRole | null;
   createdAt: string;
   updatedAt?: string | null;
-  /** @deprecated Use clerkId instead */
-  username?: string;
 }
 
 export interface CreateUserData {
@@ -96,7 +94,7 @@ export interface UpdateOrgData {
   name?: string;
 }
 
-export interface OrgUser {
+export interface OrgMember {
   id: string;
   userId: string;
   orgId: string;
@@ -154,11 +152,6 @@ export interface WebsiteStats {
  * Link statistics - alias to WebsiteStats as they share the same structure
  */
 export type LinkStats = WebsiteStats;
-
-/**
- * @deprecated Use WebsiteStats or LinkStats instead
- */
-export type Stats = WebsiteStats;
 
 export interface PageviewData {
   x: string;
@@ -716,35 +709,37 @@ export interface TrackFormEventData {
 // ============================================================================
 
 export interface Deployment {
-  id: string;
-  websiteId: string;
   deployId: string;
-  gitSha?: string;
-  gitBranch?: string;
-  deployUrl?: string;
-  firstSeenAt: string;
-  lastSeenAt: string;
-  totalSessions: number;
-  totalPageviews: number;
-  avgLcp?: number;
-  avgInp?: number;
-  avgCls?: number;
-  avgTtfb?: number;
-  avgFcp?: number;
+  gitSha: string | null;
+  gitBranch: string | null;
+  source:
+    | "vercel"
+    | "netlify"
+    | "cloudflare"
+    | "railway"
+    | "render"
+    | "fly"
+    | "heroku"
+    | "aws"
+    | "gcp"
+    | "azure"
+    | "custom";
+  deployUrl: string | null;
+  environment: string | null;
+  deployedAt: string;
+  pageviews: number;
+  visitors: number;
+  errors: number;
 }
 
 export interface DeploymentComparison {
-  current: Deployment;
-  previous?: Deployment;
-  diff: {
-    sessions: number;
-    pageviews: number;
-    lcp?: number;
-    inp?: number;
-    cls?: number;
-    ttfb?: number;
-    fcp?: number;
-  };
+  deployId: string;
+  gitSha: string | null;
+  deployedAt: string;
+  pageviews: number;
+  visitors: number;
+  avgLoadTime: number | null;
+  errorCount: number;
 }
 
 export interface DeploymentParams extends DateRangeParams {

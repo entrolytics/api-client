@@ -1,6 +1,6 @@
 {
   "name": "@entrolytics/api-client",
-  "version": "2.2.0",
+  "version": "2.2.2",
   "description": "TypeScript API client for Entrolytics - First-party growth analytics for the edge",
   "keywords": [
     "analytics",
@@ -47,18 +47,13 @@
     "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
-    "@entrolytics/shared": "^2.4.0"
+    "@entrolytics/shared": "^2.4.1"
   },
   "devDependencies": {
-    "@types/node": "^25.5.0",
-    "typescript": "^6.0.2",
-    "vite-plus": "latest"
+    "@types/node": "^25.9.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.15",
+    "vite-plus": "^0.1.23"
   },
-  "packageManager": "pnpm@10.33.0",
-  "pnpm": {
-    "overrides": {
-      "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-      "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
-    }
-  }
+  "packageManager": "pnpm@11.5.0"
 }

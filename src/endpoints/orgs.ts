@@ -3,8 +3,8 @@ import type {
   ApiResponse,
   CreateOrgData,
   JoinOrgData,
+  OrgMember,
   Organization,
-  OrgUser,
   UpdateOrgData,
   Website,
 } from "../types";
@@ -56,36 +56,36 @@ export function createOrgsEndpoints(client: ApiClient) {
     /**
      * Get organization members.
      */
-    getOrgUsers(orgId: string): Promise<ApiResponse<OrgUser[]>> {
-      return client.get<OrgUser[]>(`/orgs/${orgId}/users`);
+    getOrgMembers(orgId: string): Promise<ApiResponse<OrgMember[]>> {
+      return client.get<OrgMember[]>(`/orgs/${orgId}/members`);
     },
 
     /**
-     * Add a user to an organization.
+     * Invite a member to an organization.
      */
-    addOrgUser(
+    inviteOrgMember(
       orgId: string,
-      data: { userId: string; role: "admin" | "member" | "view-only" },
-    ): Promise<ApiResponse<OrgUser>> {
-      return client.post<OrgUser>(`/orgs/${orgId}/users`, data);
+      data: { email: string; role: "admin" | "member" | "viewer" },
+    ): Promise<ApiResponse<void>> {
+      return client.post<void>(`/orgs/${orgId}/members`, data);
     },
 
     /**
      * Update an organization member's role.
      */
-    updateOrgUser(
+    updateOrgMember(
       orgId: string,
-      userId: string,
-      data: { role: "admin" | "member" | "view-only" },
-    ): Promise<ApiResponse<OrgUser>> {
-      return client.post<OrgUser>(`/orgs/${orgId}/users/${userId}`, data);
+      memberId: string,
+      data: { role: "admin" | "member" | "viewer" },
+    ): Promise<ApiResponse<OrgMember>> {
+      return client.patch<OrgMember>(`/orgs/${orgId}/members/${memberId}`, data);
     },
 
     /**
-     * Remove a user from an organization.
+     * Remove a member from an organization.
      */
-    removeOrgUser(orgId: string, userId: string): Promise<ApiResponse<void>> {
-      return client.delete<void>(`/orgs/${orgId}/users/${userId}`);
+    removeOrgMember(orgId: string, memberId: string): Promise<ApiResponse<void>> {
+      return client.delete<void>(`/orgs/${orgId}/members/${memberId}`);
     },
 
     /**

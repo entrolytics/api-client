@@ -94,10 +94,10 @@ export interface EntrolyticsClient {
   getOrg: ReturnType<typeof createOrgsEndpoints>["getOrg"];
   updateOrg: ReturnType<typeof createOrgsEndpoints>["updateOrg"];
   deleteOrg: ReturnType<typeof createOrgsEndpoints>["deleteOrg"];
-  getOrgUsers: ReturnType<typeof createOrgsEndpoints>["getOrgUsers"];
-  addOrgUser: ReturnType<typeof createOrgsEndpoints>["addOrgUser"];
-  updateOrgUser: ReturnType<typeof createOrgsEndpoints>["updateOrgUser"];
-  removeOrgUser: ReturnType<typeof createOrgsEndpoints>["removeOrgUser"];
+  getOrgMembers: ReturnType<typeof createOrgsEndpoints>["getOrgMembers"];
+  inviteOrgMember: ReturnType<typeof createOrgsEndpoints>["inviteOrgMember"];
+  updateOrgMember: ReturnType<typeof createOrgsEndpoints>["updateOrgMember"];
+  removeOrgMember: ReturnType<typeof createOrgsEndpoints>["removeOrgMember"];
   getOrgWebsites: ReturnType<typeof createOrgsEndpoints>["getOrgWebsites"];
   addOrgWebsite: ReturnType<typeof createOrgsEndpoints>["addOrgWebsite"];
   removeOrgWebsite: ReturnType<typeof createOrgsEndpoints>["removeOrgWebsite"];

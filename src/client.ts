@@ -24,6 +24,22 @@ interface RequestOptions {
   headers?: Record<string, string>;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function unwrapSuccessPayload<T>(payload: unknown): T | undefined {
+  if (payload === undefined) {
+    return undefined;
+  }
+
+  if (isRecord(payload) && "data" in payload) {
+    return payload.data as T;
+  }
+
+  return payload as T;
+}
+
 /**
  * Core API client for making authenticated requests.
  */
@@ -149,13 +165,16 @@ export class ApiClient {
 
         const response = await this.fetchFn(url, fetchOptions);
 
-        const data = (await response.json().catch(() => ({}))) as Record<string, unknown>;
+        const data =
+          response.status === 204
+            ? undefined
+            : ((await response.json().catch(() => undefined)) as unknown);
 
         if (!response.ok) {
           const errorMessage =
-            typeof data.error === "string"
+            isRecord(data) && typeof data.error === "string"
               ? data.error
-              : typeof data.message === "string"
+              : isRecord(data) && typeof data.message === "string"
                 ? data.message
                 : `HTTP ${response.status}`;
 
@@ -178,7 +197,7 @@ export class ApiClient {
         return {
           ok: true,
           status: response.status,
-          data: data as T,
+          data: unwrapSuccessPayload<T>(data),
         };
       } catch (error) {
         lastError = {
