@@ -101,6 +101,8 @@ export function createEventsEndpoints(client: ApiClient) {
     sendTestEvent(websiteId: string): Promise<ApiResponse<void>> {
       return client.post<void>("/collect", {
         websiteId,
+        eventId: generateUuid(),
+        timestamp: new Date().toISOString(),
         sessionId: generateUuid(),
         visitorId: generateUuid(),
         url: "https://entrolytics.click/test-event",

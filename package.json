@@ -47,13 +47,13 @@
     "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
-    "@entrolytics/shared": "^2.4.1"
+    "@entrolytics/shared": "^2.4.2"
   },
   "devDependencies": {
-    "@types/node": "^25.9.1",
-    "typescript": "^6.0.3",
-    "vite": "^8.0.15",
-    "vite-plus": "^0.1.23"
+    "@types/node": "^26.2.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.1",
+    "vite-plus": "^0.2.8"
   },
-  "packageManager": "pnpm@11.5.0"
+  "packageManager": "pnpm@11.21.0"
 }
