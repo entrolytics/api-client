@@ -1,6 +1,6 @@
 {
   "name": "@entrolytics/api-client",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "TypeScript API client for Entrolytics - First-party growth analytics for the edge",
   "keywords": [
     "analytics",
@@ -44,7 +44,7 @@
     "lint:fix-unsafe": "vp lint -f stylish --import-plugin --type-aware --type-check --vitest-plugin --fix --fix-suggestions --fix-dangerously .",
     "format": "vp fmt --write .",
     "test": "vp test run",
-    "typecheck": "tsgo --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@entrolytics/shared": "^2.4.2"
