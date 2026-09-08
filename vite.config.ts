@@ -1,11 +1,11 @@
 import { defineConfig } from "vite-plus";
 
 export default defineConfig({
-  pack: {
+  pack: { deps: { resolveDepSubpath: true },
     entry: ["src/index.ts"],
     format: ["cjs", "esm"],
     fixedExtension: false,
-    dts: true,
+    dts: false,
     clean: true,
     sourcemap: true,
     minify: false,
