@@ -1,6 +1,6 @@
 {
   "name": "@entrolytics/api-client",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "TypeScript API client for Entrolytics - First-party growth analytics for the edge",
   "keywords": [
     "analytics",
@@ -47,7 +47,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@entrolytics/shared": "^3.0.0"
+    "@entrolytics/shared": "^3.0.1"
   },
   "devDependencies": {
     "@types/node": "^26.5.0",
