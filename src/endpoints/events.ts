@@ -105,7 +105,7 @@ export function createEventsEndpoints(client: ApiClient) {
         timestamp: new Date().toISOString(),
         sessionId: generateUuid(),
         visitorId: generateUuid(),
-        url: "https://entrolytics.click/test-event",
+        url: "https://entrolytics.dev/test-event",
         eventType: "custom_event",
         eventName: "cli_test_event",
         properties: {

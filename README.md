@@ -33,7 +33,7 @@ npm install @entrolytics/trpc-client
 import { EntrolyticsClient } from "@entrolytics/api-client";
 
 const client = new EntrolyticsClient({
-  apiUrl: "https://api.entrolytics.click",
+  apiUrl: "https://api.entrolytics.dev",
   apiKey: "your-key",
 });
 
@@ -46,7 +46,7 @@ const websites = await client.websites.list();
 import { createClient } from "@entrolytics/trpc-client";
 
 const client = createClient({
-  apiUrl: "https://api.entrolytics.click",
+  apiUrl: "https://api.entrolytics.dev",
   apiKey: "your-key",
 });
 
