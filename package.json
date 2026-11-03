@@ -47,15 +47,15 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@entrolytics/shared": "^3.0.1"
+    "@entrolytics/shared": "^3.1.0"
   },
   "devDependencies": {
-    "@types/node": "^26.5.0",
-    "oxfmt": "^0.67.0",
-    "oxlint": "^1.82.0",
-    "tsdown": "^0.23.0",
+    "@types/node": "^26.6.6",
+    "oxfmt": "^0.76.0",
+    "oxlint": "^1.91.0",
+    "tsdown": "^0.23.5",
     "typescript": "next",
-    "vitest": "^5.0.0"
+    "vitest": "^5.1.0"
   },
-  "packageManager": "pnpm@11.27.1"
+  "packageManager": "pnpm@12.17.0"
 }
