@@ -1,6 +1,6 @@
 {
   "name": "@entrolytics/api-client",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "TypeScript API client for Entrolytics - First-party growth analytics for the edge",
   "keywords": [
     "analytics",
