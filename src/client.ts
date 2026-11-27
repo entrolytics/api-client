@@ -3,7 +3,7 @@ import type { ApiResponse } from "./types";
 export interface ClientConfig {
   /** API endpoint URL (e.g., 'https://analytics.example.com/api') */
   endpoint?: string;
-  /** Bearer token for Clerk-authenticated requests */
+  /** Bearer token: a CLI token (`entro_…`) or the dashboard's short-lived session token */
   bearerToken?: string;
   /** API key for programmatic access */
   apiKey?: string;
@@ -94,7 +94,6 @@ export class ApiClient {
     const headers: Record<string, string> = {};
 
     if (this.bearerToken) {
-      // Clerk JWT Bearer token authentication
       headers.Authorization = `Bearer ${this.bearerToken}`;
     } else if (this.apiKey) {
       // API key authentication

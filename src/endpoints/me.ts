@@ -11,16 +11,6 @@ export function createMeEndpoints(client: ApiClient) {
     },
 
     /**
-     * Update current user's password.
-     */
-    updateMyPassword(data: {
-      currentPassword: string;
-      newPassword: string;
-    }): Promise<ApiResponse<void>> {
-      return client.post<void>("/me/password", data);
-    },
-
-    /**
      * Get current user's websites.
      */
     getMyWebsites(): Promise<ApiResponse<Website[]>> {

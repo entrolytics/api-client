@@ -13,5 +13,4 @@ export { createReportsEndpoints } from "./reports";
 export { createSegmentsEndpoints } from "./segments";
 export { createSessionsEndpoints } from "./sessions";
 export { createUsersEndpoints } from "./users";
-export { createWebhooksEndpoints } from "./webhooks";
 export { createWebsitesEndpoints } from "./websites";

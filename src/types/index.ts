@@ -39,15 +39,15 @@ export type OrganizationRole = "owner" | "admin" | "member" | "viewer";
 
 export interface User {
   id: string;
-  /** Clerk user ID (user_xxx format) */
+  /** ID of the sign-in identity the account belongs to (the field keeps its older name) */
   clerkId: string;
   /** Primary email address */
   email: string;
   /** Display name (computed from firstName + lastName or email) */
   displayName: string;
-  /** First name from Clerk */
+  /** First name */
   firstName?: string | null;
-  /** Last name from Clerk */
+  /** Last name */
   lastName?: string | null;
   /** Profile image URL */
   imageUrl?: string | null;

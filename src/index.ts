@@ -15,7 +15,6 @@ import {
   createSegmentsEndpoints,
   createSessionsEndpoints,
   createUsersEndpoints,
-  createWebhooksEndpoints,
   createWebsitesEndpoints,
 } from "./endpoints";
 
@@ -74,7 +73,6 @@ export interface EntrolyticsClient {
 
   // Me endpoints
   getMe: ReturnType<typeof createMeEndpoints>["getMe"];
-  updateMyPassword: ReturnType<typeof createMeEndpoints>["updateMyPassword"];
   getMyWebsites: ReturnType<typeof createMeEndpoints>["getMyWebsites"];
   getMyOrgs: ReturnType<typeof createMeEndpoints>["getMyOrgs"];
 
@@ -219,9 +217,6 @@ export interface EntrolyticsClient {
   // Admin endpoints (admin only)
   admin: ReturnType<typeof createAdminEndpoints>;
 
-  // Webhook endpoints
-  webhooks: ReturnType<typeof createWebhooksEndpoints>;
-
   // Integration endpoints
   integrations: ReturnType<typeof createIntegrationsEndpoints>;
 
@@ -265,7 +260,6 @@ export function getClient(config?: ClientConfig): EntrolyticsClient {
   const links = createLinksEndpoints(apiClient);
   const pixels = createPixelsEndpoints(apiClient);
   const boards = createBoardsEndpoints(apiClient);
-  const webhooks = createWebhooksEndpoints(apiClient);
   const integrations = createIntegrationsEndpoints(apiClient);
 
   return {
@@ -297,8 +291,6 @@ export function getClient(config?: ClientConfig): EntrolyticsClient {
     getConfig: config_endpoints.get,
     // Admin
     admin,
-    // Webhooks
-    webhooks,
     // Integrations
     integrations,
     // Billing
@@ -323,7 +315,6 @@ export {
   createSegmentsEndpoints,
   createSessionsEndpoints,
   createUsersEndpoints,
-  createWebhooksEndpoints,
   createWebsitesEndpoints,
 };
 

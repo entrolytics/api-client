@@ -5,6 +5,16 @@ All notable changes to this project are documented in this file. The format foll
 
 ## [Unreleased]
 
+### Removed
+
+- **Breaking.** `updateMyPassword` and `webhooks.clerk` (with `createWebhooksEndpoints` and
+  `WebhookClerkParams`). The API no longer has `POST /me/password` or `POST /webhooks/clerk`: sign-in
+  moved from Clerk to the dashboard itself, where a password is set and changed.
+
+### Changed
+
+- `User.clerkId` is documented as the ID of the sign-in identity. The field keeps its name.
+
 ## [3.0.3] - 2026-11-26
 
 ### Changed
