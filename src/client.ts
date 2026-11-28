@@ -5,7 +5,10 @@ export interface ClientConfig {
   endpoint?: string;
   /** Bearer token: a CLI token (`entro_…`) or the dashboard's short-lived session token */
   bearerToken?: string;
-  /** API key for programmatic access */
+  /**
+   * A website's API key, sent as `x-api-key`. It only writes for that website (sending events,
+   * registering deployments); reading or managing data needs `bearerToken`.
+   */
   apiKey?: string;
   /** Custom fetch implementation */
   fetch?: typeof fetch;
@@ -87,8 +90,8 @@ export class ApiClient {
   }
 
   /**
-   * Generate authentication headers.
-   * Priority: Bearer token > API key
+   * Generate authentication headers. A bearer token wins when both are set: the API key only
+   * authenticates writes for one website.
    */
   private getAuthHeaders(): Record<string, string> {
     const headers: Record<string, string> = {};
@@ -96,7 +99,6 @@ export class ApiClient {
     if (this.bearerToken) {
       headers.Authorization = `Bearer ${this.bearerToken}`;
     } else if (this.apiKey) {
-      // API key authentication
       headers["x-api-key"] = this.apiKey;
     }
 

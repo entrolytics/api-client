@@ -235,7 +235,7 @@ export interface EntrolyticsClient {
  * // With explicit configuration
  * const client = getClient({
  *   endpoint: 'https://analytics.example.com/api',
- *   apiKey: 'your-api-key',
+ *   bearerToken: 'entro_...',
  * });
  *
  * // Make API calls

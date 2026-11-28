@@ -14,6 +14,8 @@ All notable changes to this project are documented in this file. The format foll
 ### Changed
 
 - `User.clerkId` is documented as the ID of the sign-in identity. The field keeps its name.
+- `apiKey` is documented as what it is: a website's API key, which only sends events and
+  registers deployments for that website. The examples that read data now use `bearerToken`.
 
 ## [3.0.3] - 2026-11-26
 
